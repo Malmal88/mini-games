@@ -1,6 +1,6 @@
 ﻿namespace лабиринт
 {
-    partial class Form1
+    partial class Лабиринт
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -42,6 +42,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(582, 553);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // timer1
@@ -50,16 +51,17 @@
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Form1
+            // Лабиринт
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 553);
             this.Controls.Add(this.pictureBox1);
             this.MinimumSize = new System.Drawing.Size(600, 600);
-            this.Name = "Form1";
+            this.Name = "Лабиринт";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Лабиринт";
+            this.Load += new System.EventHandler(this.Лабиринт_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

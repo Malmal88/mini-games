@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace лабиринт
 {
-    public partial class Form1 : Form
+    public partial class Лабиринт : Form
     {
-        public Form1()
+        public Лабиринт()
         {
             InitializeComponent();
             Init();
@@ -120,7 +120,18 @@ namespace лабиринт
             var cx=row*cellsize;
             var cy=column*cellsize;
             gr.FillRectangle(Brushes.Red,cx,cy,cellsize,cellsize);
-        }    
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Лабиринт_Load(object sender, EventArgs e)
+        {
+
+        }
+
         void apple(Graphics gr, int row, int column)
         {
             var cx = row * cellsize;
