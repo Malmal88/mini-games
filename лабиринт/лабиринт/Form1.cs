@@ -17,21 +17,21 @@ namespace лабиринт
         {
             InitializeComponent();
             Init();
-            Width = cellsize * mapwidth+17;
-            Height = cellsize * mapheight+40;
+            Width = cellsize * mapwidth + 17;
+            Height = cellsize * mapheight + 40;
         }
-         void Init()
-         {
-            for(int i = 0; i < mapwidth; i++)
+        void Init()
+        {
+            for (int i = 0; i < mapwidth; i++)
             {
-                for(int j = 0; j < mapheight; j++)
+                for (int j = 0; j < mapheight; j++)
                 {
-                    map[i, j] = r.Next(0,4) ;
+                    map[i, j] = r.Next(0, 4);
                     map[0, i] = 1;
                     map[j, 0] = 1;
-                    map[i, mapwidth-1] = 1;
-                    map[mapheight-1, j] = 1;
-                   
+                    map[i, mapwidth - 1] = 1;
+                    map[mapheight - 1, j] = 1;
+
                 }
             }
             map[exitX - 1, exitY + 1] = 0;
@@ -43,15 +43,17 @@ namespace лабиринт
         static int mapheight = 12;
         static int[,] map = new int[mapwidth, mapheight];
         Random r = new Random();
-        int playerX=0, playerY= 10;
-        int exitX=10, exitY=1;
-        int enterX=0, enterY=10;
+        int playerX = 0, playerY = 10;
+        int exitX = 10, exitY = 1;
+        int enterX = 0, enterY = 10;
         int counter = 0;
         int level = 1;
-        
-        
+
+
         void mapbuild(Graphics gr)
         {
+            var bmp = Bitmap.FromFile("shahter.jpg");
+            var bmpExit = Bitmap.FromFile("exit.jpg");
             int x = map.GetLength(0);
             int y = map.GetLength(1);
             for (int i = 0; i < x; i++)
@@ -63,44 +65,43 @@ namespace лабиринт
                         case 1:
                             wall(gr, i, j);
                             break;
-                            case 2:
+                        case 2:
                             apple(gr, i, j); break;
 
                     }
 
                 }
             }
-            gr.FillRectangle(Brushes.Black, enterX * cellsize, enterY*cellsize , cellsize *2 , cellsize );
-            gr.FillRectangle(Brushes.Green, exitX * cellsize, exitY * cellsize, cellsize , cellsize);
-            gr.FillEllipse(Brushes.White, playerX*cellsize, playerY*cellsize, cellsize , cellsize );
-            gr.DrawString("ВЫХОД", SystemFonts.DefaultFont, Brushes.White,exitX*cellsize ,exitY*cellsize );
-            gr.DrawString($"Собрано яблок {counter}", SystemFonts.DefaultFont, Brushes.White, exitX, exitY);
-            gr.DrawString($"Уровень {level}", SystemFonts.DefaultFont, Brushes.White, exitX, exitY+15);
+            gr.FillRectangle(Brushes.Black, enterX * cellsize, enterY * cellsize, cellsize * 2, cellsize);
+            gr.DrawImage(bmp, playerX * cellsize, playerY * cellsize);
+            gr.DrawImage(bmpExit, exitX * cellsize, exitY * cellsize);
+            gr.DrawString($"Собрано алмазов {counter}", SystemFonts.DefaultFont, Brushes.Black, exitX, exitY);
+            gr.DrawString($"Уровень {level}", SystemFonts.DefaultFont, Brushes.Black, exitX, exitY + 15);
         }
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             {
                 if (keyData == Keys.Up)
                 {
-                    if (map[playerX,playerY-1]!=1)
+                    if (map[playerX, playerY - 1] != 1)
                     {
-                        { playerY --; } 
+                        { playerY--; }
                     }
                 }
                 if (keyData == Keys.Down)
                 {
                     if (map[playerX, playerY + 1] != 1)
                     {
-                        { playerY ++; }
+                        { playerY++; }
                     }
                 }
                 if (keyData == Keys.Right)
                 {
-                    if (map[playerX+1, playerY] != 1)
+                    if (map[playerX + 1, playerY] != 1)
                     {
-                        { playerX ++; }
+                        { playerX++; }
                     }
-                  
+
                 }
                 if (keyData == Keys.Left)
                 {
@@ -110,16 +111,18 @@ namespace лабиринт
                     }
                 }
             }
-           
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
-            
+
 
         void wall(Graphics gr, int row, int column)
-        {            
-            var cx=row*cellsize;
-            var cy=column*cellsize;
-            gr.FillRectangle(Brushes.Red,cx,cy,cellsize,cellsize);
+        {
+            var cx = row * cellsize;
+            var cy = column * cellsize;
+            var bmp = Bitmap.FromFile("brick-wall.jpg");
+
+            gr.DrawImage(bmp, cx, cy);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -136,9 +139,10 @@ namespace лабиринт
         {
             var cx = row * cellsize;
             var cy = column * cellsize;
-            gr.FillEllipse(Brushes.Green,cx,cy,cellsize,cellsize);
+            var bmp = Bitmap.FromFile("almaz.jpg");
+            gr.DrawImage(bmp, cx, cy);
         }
-      
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             pictureBox1.Invalidate();
@@ -149,18 +153,19 @@ namespace лабиринт
             var gr = e.Graphics;
             gr.Clear(Color.Black);
             gr.SmoothingMode = SmoothingMode.AntiAlias;
-          
+
             mapbuild(gr);
-            if (map[playerX, playerY]==2) { map[playerX, playerY] = 0; counter++; }
-            if (playerX==exitX && playerY == exitY)
+            if (map[playerX, playerY] == 2) { map[playerX, playerY] = 0; counter++; }
+            if (playerX == exitX && playerY == exitY)
             {
                 Init();
                 level++;
-                playerX = enterX; playerY=enterY;
-              
+                playerX = enterX; playerY = enterY;
+
             }
 
-           
+
+
         }
     }
 }
